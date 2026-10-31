@@ -1,0 +1,36 @@
+/* Block characters use separate wrappers for approach, walking, and retreat. */
+.entrance .corridor{height:220px;position:relative;perspective:400px;background:linear-gradient(90deg,#172737 0%,#070d14 28%,#070d14 72%,#172737 100%)}
+.floor-lines{position:absolute;inset:55% -50% -70%;transform:rotateX(58deg);background:repeating-linear-gradient(0deg,transparent 0 28px,#5ac8d329 29px 31px),repeating-linear-gradient(90deg,transparent 0 45px,#5ac8d329 46px 48px)}
+.monster-position{position:absolute;width:90px;height:150px;bottom:25px;left:calc(50% - 45px);transform-origin:center bottom;transition:transform .15s linear,opacity .3s;z-index:1}
+.block-monster{--skin:#8ba7bb;--shirt:#805bed;position:relative;width:90px;height:150px;filter:drop-shadow(0 8px 8px #000);animation:stomp .55s ease-in-out infinite}
+.variant-1{--skin:#91bf86;--shirt:#c35f40;animation-delay:-.25s}.variant-2{--skin:#b5a1cd;--shirt:#297f92;animation-duration:.4s}.variant-3{--skin:#caad7d;--shirt:#aa3e6a;animation-delay:-.15s}
+.block-head{position:absolute;left:22px;top:0;width:46px;height:43px;background:var(--skin);border-top:6px solid #ffffff33;border-right:7px solid #0004;box-shadow:3px 3px #0004}
+.block-head i{position:absolute;top:13px;width:8px;height:7px;background:#ffb1a1;box-shadow:0 0 9px #ff543c}.block-head i:first-child{left:6px}.block-head i:nth-child(2){right:5px}.block-head b{position:absolute;left:12px;bottom:7px;width:16px;height:4px;background:#182330}
+.block-body{position:absolute;left:17px;top:46px;width:56px;height:55px;background:var(--shirt);border-right:9px solid #0004;border-top:5px solid #fff3}
+.block-arm{position:absolute;top:48px;width:15px;height:58px;background:linear-gradient(var(--shirt) 55%,var(--skin) 55%);transform-origin:top;animation:swing .55s ease-in-out infinite alternate}.arm-left{left:0}.arm-right{right:0;animation-direction:alternate-reverse}
+.block-leg{position:absolute;top:103px;width:23px;height:45px;background:#354a64;border-bottom:9px solid #18202e;transform-origin:top;animation:swing .55s ease-in-out infinite alternate-reverse}.leg-left{left:18px}.leg-right{right:18px;animation-direction:alternate}
+.shutter{position:absolute;inset:0;z-index:2;background:repeating-linear-gradient(0deg,#394c5c 0 22px,#1b2935 23px 27px);border-bottom:8px solid #9af0cb;transform:translateY(-105%);transition:transform .32s cubic-bezier(.2,.8,.3,1)}
+.sealed .shutter{transform:translateY(0)}.sealed .corridor{background:#080e14}.repelled:not(.sealed) .shutter{animation:door-slam 1s ease-in-out}.repelled .block-monster{animation:retreat 1s ease-out forwards}.repel-effect{position:absolute;inset:25% 0 auto;text-align:center;color:#9af0cb;font-weight:800;letter-spacing:2px;opacity:0;z-index:3}.repelled .repel-effect{animation:repel-text 1s ease-out}.dawn-result{animation:dawn .9s ease-out}.loss-result{animation:impact .4s ease-out;border-color:#b85a67!important}
+@keyframes stomp{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+@keyframes swing{from{transform:rotate(-17deg)}to{transform:rotate(17deg)}}
+@keyframes retreat{to{transform:translateY(-35px) scale(.1);opacity:0}}
+@keyframes door-slam{0%,100%{transform:translateY(-105%)}18%,65%{transform:translateY(0)}}
+@keyframes repel-text{15%,65%{opacity:1;transform:translateY(-8px)}100%{opacity:0;transform:translateY(-22px)}}
+@keyframes dawn{from{box-shadow:0 0 70px #e5b96577;transform:translateY(12px)}to{box-shadow:0 0 0 transparent;transform:translateY(0)}}
+@keyframes impact{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after{animation:none!important;transition:none!important}.reduce-motion .monster-position{transform:none!important}.reduce-motion .repelled .repel-effect{opacity:1}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.monster-position{transform:none!important}.repelled .repel-effect{opacity:1}}
+@media(max-width:550px){header{gap:12px;align-items:center}header button{font-size:13px;padding:8px}.entrance .corridor{height:180px}}
+
+#office{grid-template-columns:1fr;max-width:680px;margin:22px auto}.entrance[hidden]{display:none!important}#entranceNav{gap:8px}#entranceNav button{flex:1;min-width:130px;font-size:14px}#entranceNav button[aria-pressed="true"]{border-color:#9af0cb;background:#28463f}#office .corridor{height:280px}
+
+/* Keep the challenge inside the live entrance, with room for the monster above it. */
+#office .corridor:has(#panel:not(.hidden)){height:auto;min-height:480px;display:flex;align-items:flex-end;padding:150px 12px 12px}
+.corridor:has(#panel:not(.hidden)) .monster-position{top:8px;bottom:auto}
+.corridor #panel{position:relative;z-index:4;width:100%;margin:0;padding:18px;text-align:left;background:#101c2cf2;border:1px solid #9af0cb;border-radius:12px}
+.corridor #panel h2{font-size:clamp(18px,4vw,24px);margin:12px 0;line-height:1.4}
+.corridor #panel .answers{gap:8px;margin:14px 0}
+.corridor #panel .answers button{white-space:normal;overflow-wrap:anywhere;min-height:44px}
+.corridor #panel .tag{font-size:11px;letter-spacing:1px}
+
+textarea{width:100%;background:#101c2c;color:#fff;border:1px solid #65758d;border-radius:8px;padding:12px;font:inherit}#answers form{display:grid;gap:12px}#answers input{min-width:0;width:100%;font:inherit;font-size:20px;padding:12px;border-radius:8px;border:1px solid #9af0cb;background:#101c2c;color:white}input:focus-visible,textarea:focus-visible{outline:3px solid #f2c86c;outline-offset:3px}
